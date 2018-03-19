@@ -1,0 +1,14 @@
+CREATE TABLE tab2(
+	col1 INT,
+	col2 VARCHAR(10),
+	CONSTRAINT PK_tab2 PRIMARY KEY(col1, col2)
+);
+
+CREATE TABLE tab1(
+	col1 INTEGER(5),
+	col2 CHAR(25),
+	col3 INT,
+	col4 VARCHAR(10),
+	CONSTRAINT PK_tab1 PRIMARY KEY(col1, col2),
+	CONSTRAINT FK_tab2 FOREIGN KEY(col3, col4) REFERENCES tab2(col1, col2)
+);

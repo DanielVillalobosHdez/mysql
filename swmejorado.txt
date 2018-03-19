@@ -1,0 +1,3 @@
+NULL	Daisy Ridley	1992/04/10	Inglesa
+NULL	John Boyega	1992/03/15	Inglesa
+NULL	Anthony Daniels	1946/02/21	Inglesa
