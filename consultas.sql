@@ -13,8 +13,6 @@
 /*SUM(), MAX(), MIN(), AVG(), COUNT()*/
 
 
-USE jardineria;
-
 /*Palabras que empiezan por OR*/
 SELECT CodigoProducto FROM Productos WHERE CodigoProducto LIKE "OR%";																												
 /*ERROR*/ 																					
