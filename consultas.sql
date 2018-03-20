@@ -1,8 +1,8 @@
 /************************************************************************************************
  *  Autor: Daniel Villalobos									*
- *  Fecha: 19/03/2018										*
+ *  Fecha: 19/03/2018, 20/03/2018								*
  *												*
- *			TITULO: Consultas							*
+ *			TÍTULO: Consultas							*
  *												*
  ************************************************************************************************/
 
@@ -49,4 +49,25 @@ SELECT CodigoProducto, PrecioVenta FROM Productos WHERE PrecioVenta>(SELECT AVG(
 
 /*Mostrar producto más caro*/
 SELECT CodigoProducto, PrecioVenta FROM Productos WHERE PrecioVenta>(SELECT MAX(PrecioVenta) FROM Productos);
+
+/*Mostrar productos que esten entre 200 y 300 */
+SELECT CodigoProducto, PrecioVenta FROM Productos WHERE PrecioVenta>200 AND PrecioVenta<300;
+SELECT CodigoProducto, PrecioVenta FROM Productos WHERE PrecioVenta BETWEEN 200 AND 300;
+
+/*Muestra el codigo de oficina de España y EEUU */
+SELECT CodigoOficina, Pais FROM Oficinas WHERE Pais IN ('España', 'EEUU');
+
+/*Muestra los empleados que no tengan jefe*/
+SELECT CodigoEmpleado, CodigoJefe FROM Empleados WHERE CodigoJefe IS NULL;
+
+/*Mostrar empleados que si tengan jefe*/
+SELECT CodigoEmpleado, CodigoJefe FROM Empleados WHERE CodigoJefe IS NOT NULL;
+
+/*Sacar el codigo oficina y la ciudad donde hay oficinas*/
+SELECT CodigoOficina, Ciudad FROM Oficinas;
+/*Sacar cuantos empleados hay en la compañia*/
+/*Sacar cuantos clientes tiene cada pais*/
+/*Sacar cual fue el pago medio en 2005*/
+/*Sacar cuantos pedidos estan en cada estado ordenado descendentemente por el número de pedido*/
+/*Sacar el precio del producto más caro y de el más barato*/
 
