@@ -16,8 +16,7 @@
 USE jardineria;
 
 /*Palabras que empiezan por OR*/
-SELECT Codigoproducto FROM Productos WHERE Codigoproducto LIKE "OR%";														
-																						
+SELECT CodigoProducto FROM Productos WHERE CodigoProducto LIKE "OR%";																												
 /*ERROR*/ 																					
 SELECT Estado, CodigoPedido FROM Pedidos GROUP BY Estado;							
 
@@ -48,7 +47,7 @@ SELECT CodigoPedido, SUM(Cantidad * PrecioUnidad) AS 'total' FROM DetallePedidos
 SELECT CodigoProducto, PrecioVenta FROM Productos WHERE PrecioVenta>(SELECT AVG(PrecioVenta) FROM Productos);
 
 /*Mostrar producto más caro*/
-SELECT CodigoProducto, PrecioVenta FROM Productos WHERE PrecioVenta>(SELECT MAX(PrecioVenta) FROM Productos);
+SELECT (SELECT MAX(PrecioVenta) FROM Productos) FROM Productos;
 
 /*Mostrar productos que esten entre 200 y 300 */
 SELECT CodigoProducto, PrecioVenta FROM Productos WHERE PrecioVenta>200 AND PrecioVenta<300;
@@ -65,9 +64,18 @@ SELECT CodigoEmpleado, CodigoJefe FROM Empleados WHERE CodigoJefe IS NOT NULL;
 
 /*Sacar el codigo oficina y la ciudad donde hay oficinas*/
 SELECT CodigoOficina, Ciudad FROM Oficinas;
-/*Sacar cuantos empleados hay en la compañia*/
-/*Sacar cuantos clientes tiene cada pais*/
-/*Sacar cual fue el pago medio en 2009*/
-/*Sacar cuantos pedidos estan en cada estado ordenado descendentemente por el número de pedido*/
-/*Sacar el precio del producto más caro y de el más barato*/
 
+/*Sacar cuantos empleados hay en la compañia*/
+SELECT COUNT(CodigoEmpleado) FROM Empleados;
+
+/*Sacar cuantos clientes tiene cada pais*/
+SELECT Pais, COUNT(CodigoCliente) FROM Clientes GROUP BY Pais;
+
+/*Sacar cual fue el pago medio en 2009*/
+SELECT (SELECT AVG(Cantidad) FROM Pagos WHERE FechaPago LIKE '2009%') AS Media FROM Pagos GROUP BY FechaPago HAVING FechaPago LIKE '2009%' LIMIT 1;
+
+/*Sacar cuantos pedidos estan en cada estado ordenado descendentemente por el número de pedido*/
+SELECT Estado, COUNT(CodigoPedido) AS Pedido FROM Pedidos GROUP BY Estado ORDER BY Pedido DESC;
+
+/*Sacar el precio del producto más caro y de el más barato*/
+SELECT (SELECT MIN(PrecioVenta) FROM Productos) AS Minimo, (SELECT MAX(PrecioVenta) FROM Productos) AS Maximo FROM Productos LIMIT 1;
