@@ -1,6 +1,6 @@
 /************************************************************************************************
  *  Autor: Daniel Villalobos									*
- *  Fecha: 19/03/2018, 20/03/2018								*
+ *  Fecha: 19/03/2018, 20/03/2018, 04/04/2018							*
  *												*
  *			TÍTULO: Consultas							*
  *												*
@@ -14,11 +14,12 @@
 
 
 /*Palabras que empiezan por OR*/
-SELECT CodigoProducto FROM Productos WHERE CodigoProducto LIKE "OR%";																												
-/*ERROR*/ 																					
-SELECT Estado, CodigoPedido FROM Pedidos GROUP BY Estado;							
+SELECT CodigoProducto FROM Productos WHERE CodigoProducto LIKE "OR%";
 
-/*Devuelve las repeticiones de una palabra*/ 																
+/*ERROR*/
+SELECT Estado, CodigoPedido FROM Pedidos GROUP BY Estado;
+
+/*Devuelve las repeticiones de una palabra*/
 SELECT Estado, COUNT(*) FROM Pedidos GROUP BY Estado;
 
 /*Muestra el valor más alto*/
@@ -60,20 +61,37 @@ SELECT CodigoEmpleado, CodigoJefe FROM Empleados WHERE CodigoJefe IS NULL;
 /*Mostrar empleados que si tengan jefe*/
 SELECT CodigoEmpleado, CodigoJefe FROM Empleados WHERE CodigoJefe IS NOT NULL;
 
+
+
 /*Sacar el codigo oficina y la ciudad donde hay oficinas*/
 SELECT CodigoOficina, Ciudad FROM Oficinas;
 
 /*Sacar cuantos empleados hay en la compañia*/
 SELECT COUNT(CodigoEmpleado) FROM Empleados;
+SELECT COUNT(*) FROM Empleados;
 
 /*Sacar cuantos clientes tiene cada pais*/
 SELECT Pais, COUNT(CodigoCliente) FROM Clientes GROUP BY Pais;
+SELECT Pais, COUNT(*) FROM Clientes GROUP BY Pais;
 
 /*Sacar cual fue el pago medio en 2009*/
 SELECT (SELECT AVG(Cantidad) FROM Pagos WHERE FechaPago LIKE '2009%') AS Media FROM Pagos GROUP BY FechaPago HAVING FechaPago LIKE '2009%' LIMIT 1;
+SELECT AVG(Cantidad) FROM Pagos WHERE YEAR(FechaPago)=2009;
 
 /*Sacar cuantos pedidos estan en cada estado ordenado descendentemente por el número de pedido*/
 SELECT Estado, COUNT(CodigoPedido) AS Pedido FROM Pedidos GROUP BY Estado ORDER BY Pedido DESC;
+SELECT Estado, COUNT(*) AS Pedido FROM Pedidos GROUP BY Estado ORDER BY Pedido DESC;
 
 /*Sacar el precio del producto más caro y de el más barato*/
 SELECT (SELECT MIN(PrecioVenta) FROM Productos) AS Minimo, (SELECT MAX(PrecioVenta) FROM Productos) AS Maximo FROM Productos LIMIT 1;
+SELECT MAX(PrecioVenta), MIN(PrecioVenta) FROM Productos;
+
+
+
+
+/*Mustra el nombre del jefe de cada empleado*/
+SELECT Curritos.CodigoEmpleado, Curritos.Nombre, Curritos.CodigoJefe, Jefe.Nombre FROM Empleados AS Curritos, Empleados AS Jefe WHERE Curritos.CodigoJefe = Jefe.CodigoEmpleado;
+SELECT Curritos.CodigoEmpleado AS Empleado, Curritos.Nombre AS NombreEmpleado, Curritos.CodigoJefe AS Jefe, Jefe.Nombre AS NombreJefe FROM Empleados AS Curritos, Empleados AS Jefe WHERE Curritos.CodigoJefe = Jefe.CodigoEmpleado;
+
+/*Mustra el nombre y apllido del jefe de cada empleado*/
+
