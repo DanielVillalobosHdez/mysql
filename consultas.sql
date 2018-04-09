@@ -119,3 +119,5 @@ SELECT Empleados.CodigoEmpleado, Empleados.Nombre, Clientes.CodigoCliente, Clien
 SELECT Empleados.CodigoEmpleado, Empleados.Nombre, Clientes.CodigoCliente, Clientes.NombreCliente FROM Empleados LEFT JOIN Clientes ON Clientes.CodigoEmpleadoRepVentas=Empleados.CodigoEmpleado ORDER BY CodigoEmpleado;
 
 /*31. */
+
+/*Descaragar aplicación de consultas mysql (sqlpractisepro)*/
