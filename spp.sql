@@ -18,17 +18,15 @@ CREATE TABLE Salarios (
 );
 
 CREATE TABLE Libros (
-        ID INT AUTO_INCREMENT,
+        ID INT,
         NombreLibro TEXT,
-        Autor TEXT,
-	CONSTRAINT PK_Libros PRIMARY KEY (ID)
+        Autor TEXT
 );
 
 CREATE TABLE Control (
         PrimerNombre TEXT,
-        SegudoNombre TEXT,
-        IDLibro INT,
-        CONSTRAINT FK_Libros FOREIGN KEY (IDLibro) REFERENCES Libros (ID)
+        SegundoNombre TEXT,
+        IDLibro INT
 );
 
 INSERT INTO Salarios VALUES 
@@ -51,6 +49,40 @@ INSERT INTO Salarios VALUES
         ('Guerin', 'Administracion', '500000'),
         ('John', 'Economia', '250000');
 
+INSERT INTO Libros VALUES
+	('9024', 'Acting for Dummies', 'Nicolas Cage'),
+        ('3492', 'Euro Training for Dummies', 'Terry Crews'),
+        ('2122', 'To Kill a Mockingbird', 'Harper Lee'),
+        ('9001', 'Achieving Super Saiyan', 'Terry Crews'),
+        ('0022', 'How to be a Charger', 'Terry Crews'),
+        ('3999', 'The Art of Learning', 'Josh Waitzkin'),
+        ('8743', 'How to be a Sweet Cop', 'Terry Crews'),
+        ('3422', 'IEOR - Master Level', 'John Buckingham'),
+        ('3242', '42 Wonderful Spaghetti Recipes', 'Merm'),
+        ('2394', 'Game of Thrones: Book 1', 'George R.R. Martin'),
+        ('1243', 'Pro Sniping 3', 'Tony Kampy'),
+        ('9240', 'War and Peace', 'Some Dude'),
+        ('9211', '1984', 'George Orwell'),
+        ('4923', 'Animal Farm', 'George Orwell'),
+        ('3923', 'Jane Eyre', 'Jane Smith'),
+        ('5929', 'Invisible Man', 'Barack Obama'),
+        ('2302', 'Memories from the Navy Feel Team', 'Sergeant McFeelz'),
+        ('3824', 'Going HAM for Derps', 'A Cool Dude'),
+        ('8141', 'I Dont Read Much', 'Developer of this App');
+
+INSERT INTO Control VALUES
+	('Justin', 'Lee', '3492'),
+        ('Justin', 'Lee', '2122'),
+        ('Justin', 'Lee', '9001'),
+        ('Tyrell', 'Lee', '0022'),
+        ('Raymond', 'Chen', '3999'),
+        ('Phil', 'Chen', '8743'),
+        ('Nate', 'Bailey', '1349'),
+        ('Nate', 'Bailey', '3422'),
+        ('Derek', 'Ng', '3242'),
+        ('John', 'Smith', '2394'),
+        ('Soap', 'MacTavish', '1234'),
+        ('John', 'Cena', '2122');
 
 
 /*CONSULTAS*/
@@ -75,7 +107,7 @@ SELECT NombreProfesor, MAX(Salario) FROM Salarios; /*No se puede utilizar una fu
 /*12. Escriba una consulta que devuelva el tercer salario más alto en la tabla. Los salarios duplicados cuentan como uno. Por ejemplo, si tiene 20, 20, 10 y 5, 10 es el segundo salario más alto.*/
 /*13. Escriba una consulta que devuelva el nombre y apellido (en este orden de columnas) de las personas que comparten su apellido con alguien que también ha prestado un libro.*/
 /*14. Escriba una consulta que devuelva el nombre y apellido de todas las personas que retiraron un libro de Terry Crews.*/
-/*15. Escriba una consulta que devuelva el nombre y apellido de todas las personas que se registraron como "Matar a un ruiseñor" por Harper Lee.*/
+/*15. Escriba una consulta que devuelva el nombre y apellido de todas las personas que se registraron como 'Matar a un ruiseñor' por Harper Lee.*/
 /*16. Escribe una consulta que devuelva el salario promedio de los profesores en la tabla. Cada profesor en el departamento de Ciencias de la Computación acaba de obtener un aumento de 10.000 dólares.*/
 /*17. Escriba una consulta que dé los nombres y los nuevos salarios (en este orden de columnas) de los profesores de Ciencias de la Computación.*/
 /*18. Escriba una consulta que emita la instrucción SQL utilizada para crear la tabla anterior.*/
