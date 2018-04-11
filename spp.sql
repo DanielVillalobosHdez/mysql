@@ -30,7 +30,7 @@ CREATE TABLE Control (
 );
 
 INSERT INTO Salarios VALUES 
-	('Zanilo', 'Informatica', '130000'),
+	('Zaniolo', 'Informatica', '130000'),
 	('Eggert', 'Informatica', '170000'),
 	('Cho', 'Informatica', '150000'),
         ('Fowler', 'Antropologia', '80000'),
@@ -89,24 +89,47 @@ INSERT INTO Control VALUES
 
 /*1. Escriba una consulta que muestre todos los contenidos de la tabla Salarios.*/
 SELECT * FROM Salarios;
+
 /*2. Escriba una consulta que devuelva los nombres de todos los profesores de la tabla Salarios.*/
 SELECT NombreProfesor FROM Salarios;
+
 /*3. Escriba una consulta que devuelva todos los departamentos en la tabla Salarios (sin duplicados).*/
 SELECT DISTINCT Departamento FROM Salarios;
+
 /*4. Escriba una consulta que devuelva la cantidad de profesores cuyo salario sea superior a 150000.*/
 SELECT COUNT(NombreProfesor) FROM Salarios WHERE Salario > 150000;
+
 /*5. Escriba una consulta que devuelva todos los departamentos y sus salarios agregados (en este orden de columnas).*/
 SELECT Departamento, SUM(Salario) FROM Salarios GROUP BY Departamento;
+
 /*6. Escriba una consulta que devuelva el nombre y el salario (en este orden de columnas) del profesor con el + salario más alto.*/
 SELECT NombreProfesor, MAX(Salario) FROM Salarios; /*No se puede utilizar una función de agregación sin el GROUP BY*/
+
 /*7. Escriba una consulta que devuelva el nombre y el salario (en este orden de columnas) del profesor con el salario más alto en el departamento de informática.*/
+SELECT NombreProfesor, MAX(Salario) FROM Salarios WHERE Departamento="Informatica"; /*No se puede utilizar una función de agregación sin el GROUP BY*/
+
 /*8. Escriba una consulta que devuelva el nombre y los salarios (en este orden de columnas) de los 5 mejores profesores con mayores ingresos.*/
+SELECT NombreProfesor, MAX(Salario) FROM Salarios ORDER BY Salario DESC LIMIT 5;/*No se puede utilizar una función de agregación sin el GROUP BY*/
+
 /*9. Escriba una consulta que devuelva el nombre y el salario (en este orden de columnas) del profesor con las ganancias más bajas.*/
+SELECT NombreProfesor, MIN(Salario) FROM Salarios; /*No se puede utilizar una función de agregación sin el GROUP BY*/
+
 /*10. Escribe una consulta que devuelva el departamento en el que trabaja el profesor Zaniolo.*/
+SELECT Departamento FROM Salarios WHERE NombreProfesor='Zaniolo';
+
 /*11. Escriba una consulta que devuelva todos los nombres de los profesores que comienzan con la letra 'C'.*/
+SELECT NombreProfesor FROM Salarios WHERE NombreProfesor LIKE 'C%';
+
 /*12. Escriba una consulta que devuelva el tercer salario más alto en la tabla. Los salarios duplicados cuentan como uno. Por ejemplo, si tiene 20, 20, 10 y 5, 10 es el segundo salario más alto.*/
+SELECT DISTINCT Salario FROM Salarios ORDER BY Salario DESC LIMIT 2, 1;
+SELECT DISTINCT Salario FROM Salarios ORDER BY Salario DESC LIMIT 1 OFFSET 2;
+
 /*13. Escriba una consulta que devuelva el nombre y apellido (en este orden de columnas) de las personas que comparten su apellido con alguien que también ha prestado un libro.*/
+SELECT DISTINCT a.PrimerNombre, a.SegundoNombre FROM Control AS a, Control AS b WHERE a.SegundoNombre=b.SegundoNombre AND a.PrimerNombre != b.PrimerNombre;
+
 /*14. Escriba una consulta que devuelva el nombre y apellido de todas las personas que retiraron un libro de Terry Crews.*/
+
+
 /*15. Escriba una consulta que devuelva el nombre y apellido de todas las personas que se registraron como 'Matar a un ruiseñor' por Harper Lee.*/
 /*16. Escribe una consulta que devuelva el salario promedio de los profesores en la tabla. Cada profesor en el departamento de Ciencias de la Computación acaba de obtener un aumento de 10.000 dólares.*/
 /*17. Escriba una consulta que dé los nombres y los nuevos salarios (en este orden de columnas) de los profesores de Ciencias de la Computación.*/
