@@ -159,10 +159,10 @@ SELECT * FROM Salarios WHERE Departamento = 'Antropologia' OR Salario > 150000;
 SELECT MAX(Salario) FROM Salarios WHERE Departamento = "Informatica";
 
 /*24. Escriba una consulta que devuelva la cantidad de profesores que ganan más del doble que el profesor con el salario más bajo en el departamento de Ciencias Políticas.*/
-SELECT  COUNT(*) FROM Salarios WHERE Salario > (SELECT MIN(Salario) FROM Salarios WHERE Departamento = 'Politocas')*2;
+SELECT  COUNT(*) FROM Salarios WHERE Salario > (SELECT MIN(Salario) FROM Salarios WHERE Departamento = 'Politicas')*2;
 
 /*25. Escriba una consulta que devuelva los nombres de todos los libros prestados por Justin (nombre) Lee (apellido).*/
-SELECT NombreLibro FROM Libros JOIN Control ON Libros.ID = Control.IDLibros WHERE PrimerNombre = 'Justin' AND SegundoNombre = 'Lee';
+SELECT NombreLibro FROM Libros JOIN Control ON Libros.ID = Control.IDLibro WHERE PrimerNombre = 'Justin' AND SegundoNombre = 'Lee';
 
 /*26. Escriba una consulta que devuelva los nombres completos (nombre completo es el primer nombre seguido de un espacio y luego el apellido) de todos los que han sacado un libro. ¡Sin duplicados!*/
 SELECT DISTINT (CONCAT(PrimerNombre, ' ', SegundoNombre) FROM Control;

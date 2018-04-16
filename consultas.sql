@@ -44,6 +44,7 @@ SELECT CodigoProducto, PrecioVenta FROM Productos WHERE PrecioVenta>(SELECT AVG(
 
 /*10. Mostrar producto más caro*/
 SELECT (SELECT MAX(PrecioVenta) FROM Productos) FROM Productos;
+SELECT MAX(PrecioVenta) FROM Productos;
 
 /*11. Mostrar productos que esten entre 200 y 300 */
 SELECT CodigoProducto, PrecioVenta FROM Productos WHERE PrecioVenta>200 AND PrecioVenta<300;
@@ -118,6 +119,22 @@ SELECT DISTINCT Clientes.CodigoEmpleadoRepVentas, Empleados.Nombre FROM Clientes
 SELECT Empleados.CodigoEmpleado, Empleados.Nombre, Clientes.CodigoCliente, Clientes.NombreCliente FROM Clientes RIGHT JOIN Empleados ON Clientes.CodigoEmpleadoRepVentas=Empleados.CodigoEmpleado ORDER BY CodigoEmpleado;
 SELECT Empleados.CodigoEmpleado, Empleados.Nombre, Clientes.CodigoCliente, Clientes.NombreCliente FROM Empleados LEFT JOIN Clientes ON Clientes.CodigoEmpleadoRepVentas=Empleados.CodigoEmpleado ORDER BY CodigoEmpleado;
 
-/*31. */
+/*31. Obtener nombre del cliente con mayor limite de credito*/
+SELECT NombreCliente FROM Clientes WHERE LimiteCredito = (SELECT MAX(LimiteCredito) FROM Clientes);
 
-/*Descaragar aplicación de consultas mysql (sqlpractisepro)*/
+/*32. Obtener Nombre, Apellido1 y cargo de los empleados que no representen a ningun cliente*/
+SELECT Empleados.Nombre, Empleados.Apellido1, Empleados.Puesto, Clientes.CodigoCliente, Clientes.NombreCliente FROM Empleados LEFT JOIN Clientes ON Clientes.CodigoEmpleadoRepVentas=Empleados.CodigoEmpleado WHERE Clientes.CodigoEmpleadoRepVentas IS NULL;
+SELECT CONCAT(Empleados.Nombre, ' ', Empleados.Apellido1) AS Empleado, Empleados.Puesto AS Puesto FROM Empleados LEFT JOIN Clientes ON Clientes.CodigoEmpleadoRepVentas=Empleados.CodigoEmpleado WHERE Clientes.CodigoEmpleadoRepVentas IS NULL;
+
+/*33. Saca un listado con el nombre de cada cliente y nombre y apellido de su representante de venta*/
+SELECT Clientes.NombreCliente, CONCAT(Empleados.Nombre, ' ', Empleados.Apellido1) AS Representante FROM Clientes JOIN Empleados ON Clientes.CodigoEmpleadoRepVentas=Empleados.CodigoEmpleado;
+
+/*34. Muestra el nombre de los clientes que no hayan realizado el pago con su representante de ventas*/
+SELECT Clientes.NombreCliente, Empleados.Nombre, Pagos.FechaPago FROM Empleados LEFT JOIN Clientes ON Clientes.CodigoEmpleadoRepVentas = Empleados.CodigoEmpleado LEFT JOIN Pagos ON Clientes.CodigoCliente = Pagos.CodigoCliente WHERE FechaPago IS NULL AND NombreCliente IS NOT NULL;
+
+/*35. Listar las ventas totales de los productos que hayan faturado más de 3.000 €, se mostrara el nombre del producto, unidades vendidas, total facturado y total facturado con el 21% de IVA*/
+SELECT Productos.Nombre, SUM(Cantidad) AS Unidades, SUM(Cantidad * PrecioUnidad) AS Total, SUM(Cantidad * PrecioUnidad)*21/100+SUM(Cantidad * PrecioUnidad) AS IVA FROM DetallePedidos NATURAL JOIN Productos GROUP BY Productos.Nombre HAVING Total > 3000;
+
+/*36. Listar la dirección de las oficinas que tengan clientes en Fuenla*/
+
+/*37. CodigoCliente, NombreCliente, CodigoPedido, Estado, CodigoProducto, Cantidad*/
