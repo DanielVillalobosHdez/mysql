@@ -133,10 +133,28 @@ SELECT Clientes.NombreCliente, CONCAT(Empleados.Nombre, ' ', Empleados.Apellido1
 SELECT Clientes.NombreCliente, Empleados.Nombre, Pagos.FechaPago FROM Empleados LEFT JOIN Clientes ON Clientes.CodigoEmpleadoRepVentas = Empleados.CodigoEmpleado LEFT JOIN Pagos ON Clientes.CodigoCliente = Pagos.CodigoCliente WHERE FechaPago IS NULL AND NombreCliente IS NOT NULL;
 
 /*35. Listar las ventas totales de los productos que hayan faturado más de 3.000 €, se mostrara el nombre del producto, unidades vendidas, total facturado y total facturado con el 21% de IVA*/
-SELECT Productos.Nombre, SUM(Cantidad) AS Unidades, SUM(Cantidad * PrecioUnidad) AS Total, SUM(Cantidad * PrecioUnidad)*21/100+SUM(Cantidad * PrecioUnidad) AS IVA FROM DetallePedidos NATURAL JOIN Productos GROUP BY Productos.Nombre HAVING Total > 3000;
+SELECT Productos.Nombre, SUM(Cantidad) AS Unidades, SUM(Cantidad * PrecioUnidad) AS Total, SUM(Cantidad * PrecioUnidad)*21/100+SUM(Cantidad * PrecioUnidad) AS IVA FROM DetallePedidos NATURAL JOIN Productos GROUP BY Productos.CodigoProducto HAVING Total > 3000;
 
 /*36. Listar la dirección de las oficinas que tengan clientes en Fuenla*/
 SELECT Oficinas.LineaDireccion1, Clientes.NombreCliente FROM Oficinas LEFT JOIN Empleados ON Oficinas.CodigoOficina=Empleados.CodigoOficina RIGHT JOIN Clientes ON Empleados.CodigoEmpleado = Clientes.CodigoEmpleadoRepVentas WHERE Clientes.LineaDireccion2 LIKE 'Fuen%';
+SELECT CONCAT(Oficinas.LineaDireccion1, ' ', Oficinas.LineaDireccion2) AS 'Dirección' FROM Clientes JOIN Empleados NATURAL JOIN Oficinas ON(Clientes.CodigoEmpleadoRepVentas=Empleados.CodigoEmpleado) WHERE Clientes.Ciudad='Fuenlabrada' ORDER BY Clientes.CodigoCliente;
 
-/*37. CodigoCliente, NombreCliente, CodigoPedido, Estado, CodigoProducto, Cantidad*/
+
+/*37. Cliente (CodigoCliente, Nombre, Cuantia) que hizo el pedido de mayor cuantia*/
+
+/*38. Cuantos clientes tienen las ciudades que empiezan por M*/
+/*39. Sacar el codigo del empleado y el numero de clientes que atiende cada representante de ventas*/
+/*40. Sacar el numero de clientes que no tienen asignado representante de ventas*/
+/*41. Sacar cual fue el primer y ultimo pago que hizo algun cliente*/
+/*42. Sacar el codigo de cliente de aquellos clientes que realizaron pagos en 2008*/
+/*43. Sacar el numero de pedidos, codigo cliente, fecha requerida, fecha de entrega de los pedidos que no han sido entregados a tiempo*/
+/*44. Sacar cuantos productos existen en cada linea de pedido*/
+/*45. Sacar un listado de los 20 codigos de productos más pedidos ordenado por cantidad pedidos*/
+/*46. Sacar el numero de pedido, codigo cliente, fecha requerida, fecha de entrega de cuyos pedidos se entregaron minimo dos días antes (FUNCION RELACIONADA CON DATE)*/
+/*47. Sacar la faturación que ha tenido la empresa en toda la historia, indicando la base imponible (coste+unidades), el IVA (21% de la base imponible) y total facturado (BI + IVA)*/
+/*48. Sacar la misma información que la pregunta anterior pero agrupada por codigo de producto, filtrada por los codigos que empiezen por FR*/ 
+/*49. Scacar el listado de jefes y de empleados a su cargo ordenados por el numero de subordinados*/
+/*50. Obtener el nombre de los clientes al que no se les ha entregado a tiempo un pedido*/
+/*51. Sacar el importe medio de los pedidos*/
+/*52. Cual es el pedido más caro del empleado que más clientes tiene*/
 
