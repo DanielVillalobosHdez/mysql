@@ -88,7 +88,7 @@ SELECT MAX(PrecioVenta), MIN(PrecioVenta) FROM Productos;
 SELECT Curritos.CodigoEmpleado, Curritos.Nombre, Curritos.CodigoJefe, Jefe.Nombre FROM Empleados AS Curritos, Empleados AS Jefe WHERE Curritos.CodigoJefe = Jefe.CodigoEmpleado;
 SELECT Curritos.CodigoEmpleado AS Empleado, Curritos.Nombre AS NombreEmpleado, Curritos.CodigoJefe AS Jefe, Jefe.Nombre AS NombreJefe FROM Empleados AS Curritos, Empleados AS Jefe WHERE Curritos.CodigoJefe = Jefe.CodigoEmpleado;
 
-/*22. Mustra el nombre y apllido del jefe de cada empleado*/
+/*22. Mustra el nombre y apellido del jefe de cada empleado*/
 SELECT Curritos.CodigoEmpleado, CONCAT(Curritos.Nombre,' ', Curritos.Apellido1) AS NombreEmpleado, CONCAT(Jefes.Nombre,' ', Jefes.Apellido1) AS NombreJefe FROM Empleados AS Curritos, Empleados AS Jefes WHERE Curritos.CodigoJefe=Jefes.CodigoEmpleado;
 
 
@@ -141,20 +141,54 @@ SELECT CONCAT(Oficinas.LineaDireccion1, ' ', Oficinas.LineaDireccion2) AS 'Direc
 
 
 /*37. Cliente (CodigoCliente, Nombre, Cuantia) que hizo el pedido de mayor cuantia*/
+SELECT Clientes.NombreCliente, Pedidos.CodigoPedido, SUM(Detalle.PrecioUnidad*Detalle.Cantidad) as Precio FROM DetallePedidos as Detalle JOIN Pedidos as Pedidos JOIN Clientes as Clientes ON Detalle.CodigoPedido = Pedidos.CodigoPedido AND Pedidos.CodigoCliente = Clientes.CodigoCliente GROUP BY Detalle.CodigoPedido HAVING Precio = (SELECT SUM(PrecioUnidad*Cantidad) as Precio FROM DetallePedidos GROUP BY CodigoPedido ORDER BY Precio DESC LIMIT 1);
 
 /*38. Cuantos clientes tienen las ciudades que empiezan por M*/
+SELECT COUNT(Clientes.NombreCliente), Clientes.Ciudad FROM Clientes as Clientes GROUP BY Ciudad HAVING Ciudad REGEXP "^M";
+
 /*39. Sacar el codigo del empleado y el numero de clientes que atiende cada representante de ventas*/
+SELECT Clientes.CodigoEmpleadoRepVentas, COUNT(Clientes.NombreCliente) FROM Clientes as Clientes GROUP BY CodigoEmpleadoRepVentas;
+
 /*40. Sacar el numero de clientes que no tienen asignado representante de ventas*/
+SELECT COUNT(Clientes.NombreCliente), Clientes.CodigoEmpleadoRepVentas FROM Clientes GROUP BY CodigoEmpleadoRepVentas HAVING CodigoEmpleadoRepVentas IS NULL;
+
+
 /*41. Sacar cual fue el primer y ultimo pago que hizo algun cliente*/
+SELECT MAX(FechaPago), MIN(FechaPago), CodigoCliente FROM Pagos GROUP BY CodigoCliente LIMIT 1;
+
 /*42. Sacar el codigo de cliente de aquellos clientes que realizaron pagos en 2008*/
+SELECT CodigoCliente FROM Pagos WHERE YEAR(FechaPago) = "2008";
+
 /*43. Sacar el numero de pedidos, codigo cliente, fecha requerida, fecha de entrega de los pedidos que no han sido entregados a tiempo*/
+SELECT CodigoPedido, CodigoCliente, FechaEsperada, FechaEntrega FROM Pedidos WHERE FechaEsperada>FechaEntrega;
+
 /*44. Sacar cuantos productos existen en cada linea de pedido*/
+SELECT CodigoPedido, COUNT(Cantidad) FROM DetallePedidos GROUP BY CodigoPedido;
+
 /*45. Sacar un listado de los 20 codigos de productos más pedidos ordenado por cantidad pedidos*/
+SELECT CodigoProducto, Cantidad FROM DetallePedidos ORDER BY Cantidad DESC LIMIT 20;
+
 /*46. Sacar el numero de pedido, codigo cliente, fecha requerida, fecha de entrega de cuyos pedidos se entregaron minimo dos días antes (FUNCION RELACIONADA CON DATE)*/
+SELECT CodigoPedido, CodigoCliente, FechaEntrega, FechaEsperada FROM Pedidos WHERE DATE(FechaEsperada)-2 >= DATE(FechaEntrega);
+
 /*47. Sacar la faturación que ha tenido la empresa en toda la historia, indicando la base imponible (coste+unidades), el IVA (21% de la base imponible) y total facturado (BI + IVA)*/
+ELECT SUM(PrecioUnidad*Cantidad) AS BI, (SUM(PrecioUnidad*Cantidad)*21)/100 AS IVA, (SUM(PrecioUnidad*Cantidad)+(SUM(PrecioUnidad*Cantidad)*21)/100) AS Total FROM DetallePedidos;
+
 /*48. Sacar la misma información que la pregunta anterior pero agrupada por codigo de producto, filtrada por los codigos que empiezen por FR*/ 
-/*49. Scacar el listado de jefes y de empleados a su cargo ordenados por el numero de subordinados*/
-/*50. Obtener el nombre de los clientes al que no se les ha entregado a tiempo un pedido*/
-/*51. Sacar el importe medio de los pedidos*/
-/*52. Cual es el pedido más caro del empleado que más clientes tiene*/
+ELECT SUM(PrecioUnidad*Cantidad) AS BI, (SUM(PrecioUnidad*Cantidad)*21)/100 AS IVA, (SUM(PrecioUnidad*Cantidad)+(SUM(PrecioUnidad*Cantidad)*21)/100) AS Total FROM DetallePedidos WHERE CodigoProducto LIKE 'FR%';
+
+/*49. Obtener listado del nombre de empleados con el nombre de sus jefes*/
+SELECT Emplea2.CodigoEmpleado, CONCAT(Emplea2.Nombre,' ', Emplea2.Apellido1) AS NombreEmpleado, CONCAT(Jefes.Nombre,' ', Jefes.Apellido1) AS NombreJefe FROM Empleados AS Emplea2, Empleados AS Jefes WHERE Emplea2.CodigoJefe=Jefes.CodigoEmpleado;
+
+/*50. Sacar el listado de jefes y de empleados a su cargo ordenados por el numero de subordinados*/
+SELECT Emplea2.CodigoEmpleado, CONCAT(Emplea2.Nombre,' ', Emplea2.Apellido1) AS NombreEmpleado, CONCAT(Jefes.Nombre,' ', Jefes.Apellido1) AS NombreJefe FROM Empleados AS Emplea2, Empleados AS Jefes WHERE Emplea2.CodigoJefe=Jefes.CodigoEmpleado ORDER BY Emplea2.CodigoEmpleado;
+
+/*51. Obtener el nombre de los clientes al que no se les ha entregado a tiempo un pedido*/
+SELECT DISTINCT Clientes.NombreCliente FROM Clientes JOIN Pedidos ON Pedidos.CodigoCliente = Clientes.CodigoCliente WHERE FechaEsperada>FechaEntrega;
+
+/*52. Sacar el importe medio de los pedidos*/
+SELECT CodigoPedido, AVG(PrecioUnidad*Cantidad) FROM DetallePedidos GROUP BY CodigoPedido;
+
+/*53. Cual es el pedido más caro del empleado que más clientes tiene*/
+
 
