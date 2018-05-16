@@ -144,7 +144,7 @@ SELECT CONCAT(Oficinas.LineaDireccion1, ' ', Oficinas.LineaDireccion2) AS 'Direc
 SELECT Clientes.NombreCliente, Pedidos.CodigoPedido, SUM(Detalle.PrecioUnidad*Detalle.Cantidad) as Precio FROM DetallePedidos as Detalle JOIN Pedidos as Pedidos JOIN Clientes as Clientes ON Detalle.CodigoPedido = Pedidos.CodigoPedido AND Pedidos.CodigoCliente = Clientes.CodigoCliente GROUP BY Detalle.CodigoPedido HAVING Precio = (SELECT SUM(PrecioUnidad*Cantidad) as Precio FROM DetallePedidos GROUP BY CodigoPedido ORDER BY Precio DESC LIMIT 1);
 
 /*38. Cuantos clientes tienen las ciudades que empiezan por M*/
-SELECT COUNT(Clientes.NombreCliente), Clientes.Ciudad FROM Clientes as Clientes GROUP BY Ciudad HAVING Ciudad REGEXP "^M";
+SELECT COUNT(NombreCliente), Ciudad FROM Clientes WHERE Ciudad LIKE 'M%' GROUP BY Ciudad;
 
 /*39. Sacar el codigo del empleado y el numero de clientes que atiende cada representante de ventas*/
 SELECT Clientes.CodigoEmpleadoRepVentas, COUNT(Clientes.NombreCliente) FROM Clientes as Clientes GROUP BY CodigoEmpleadoRepVentas;
