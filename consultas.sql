@@ -155,6 +155,7 @@ SELECT COUNT(Clientes.NombreCliente), Clientes.CodigoEmpleadoRepVentas FROM Clie
 
 /*41. Sacar cual fue el primer y ultimo pago que hizo algun cliente*/
 SELECT MAX(FechaPago), MIN(FechaPago), CodigoCliente FROM Pagos GROUP BY CodigoCliente LIMIT 1;
+SELECT * FROM Pagos WHERE FechaPago = (SELECT MAX(FechaPago) FROM Pagos WHERE CodigoCliente = 1) OR (SELECT MIN(FechaPago) FROM Pagos WHERE CodigoCliente = 1) AND CodigoCliente = 1;
 
 /*42. Sacar el codigo de cliente de aquellos clientes que realizaron pagos en 2008*/
 SELECT CodigoCliente FROM Pagos WHERE YEAR(FechaPago) = "2008";
