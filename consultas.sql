@@ -190,5 +190,3 @@ SELECT DISTINCT Clientes.NombreCliente FROM Clientes JOIN Pedidos ON Pedidos.Cod
 SELECT CodigoPedido, AVG(PrecioUnidad*Cantidad) FROM DetallePedidos GROUP BY CodigoPedido;
 
 /*53. Cual es el pedido más caro del empleado que más clientes tiene*/
-
-
