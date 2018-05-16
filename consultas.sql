@@ -172,10 +172,10 @@ SELECT CodigoProducto, Cantidad FROM DetallePedidos ORDER BY Cantidad DESC LIMIT
 SELECT CodigoPedido, CodigoCliente, FechaEntrega, FechaEsperada FROM Pedidos WHERE DATE(FechaEsperada)-2 >= DATE(FechaEntrega);
 
 /*47. Sacar la faturación que ha tenido la empresa en toda la historia, indicando la base imponible (coste+unidades), el IVA (21% de la base imponible) y total facturado (BI + IVA)*/
-ELECT SUM(PrecioUnidad*Cantidad) AS BI, (SUM(PrecioUnidad*Cantidad)*21)/100 AS IVA, (SUM(PrecioUnidad*Cantidad)+(SUM(PrecioUnidad*Cantidad)*21)/100) AS Total FROM DetallePedidos;
+SELECT SUM(PrecioUnidad*Cantidad) AS BI, (SUM(PrecioUnidad*Cantidad)*21)/100 AS IVA, (SUM(PrecioUnidad*Cantidad)+(SUM(PrecioUnidad*Cantidad)*21)/100) AS Total FROM DetallePedidos;
 
 /*48. Sacar la misma información que la pregunta anterior pero agrupada por codigo de producto, filtrada por los codigos que empiezen por FR*/ 
-ELECT SUM(PrecioUnidad*Cantidad) AS BI, (SUM(PrecioUnidad*Cantidad)*21)/100 AS IVA, (SUM(PrecioUnidad*Cantidad)+(SUM(PrecioUnidad*Cantidad)*21)/100) AS Total FROM DetallePedidos WHERE CodigoProducto LIKE 'FR%';
+SELECT SUM(PrecioUnidad*Cantidad) AS BI, (SUM(PrecioUnidad*Cantidad)*21)/100 AS IVA, (SUM(PrecioUnidad*Cantidad)+(SUM(PrecioUnidad*Cantidad)*21)/100) AS Total FROM DetallePedidos WHERE CodigoProducto LIKE 'FR%';
 
 /*49. Obtener listado del nombre de empleados con el nombre de sus jefes*/
 SELECT Emplea2.CodigoEmpleado, CONCAT(Emplea2.Nombre,' ', Emplea2.Apellido1) AS NombreEmpleado, CONCAT(Jefes.Nombre,' ', Jefes.Apellido1) AS NombreJefe FROM Empleados AS Emplea2, Empleados AS Jefes WHERE Emplea2.CodigoJefe=Jefes.CodigoEmpleado;
