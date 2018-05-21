@@ -126,31 +126,39 @@ SELECT hello('world');
 
 delimiter //
 
-CREATE FUNCTION Meses (num INT(2))
-  BEGIN
+CREATE PROCEDURE Meses (num INT(2)) 
+  BEGIN  
+  SET @Mes = 'ENERO';
     CASE num
         WHEN 1
-            CONCAT('ENERO, ', num);
+            THEN SET @Mes = 'ENERO';
         WHEN 2
-            CONCAT('FEBRERO, ', num);
+            THEN SET @Mes = 'FEBRERO';
         WHEN 3
-            CONCAT('MARZO, ', num);
+            THEN SET @Mes = 'MARZO';
         WHEN 4
-            CONCAT('ENERO, ', num);
+            THEN SET @Mes = 'ABRIL';
         WHEN 5
-            CONCAT('FEBRERO, ', num);
+            THEN SET @Mes = 'MAYO';
         WHEN 6
-             CONCAT('MARZO, ', num);
+            THEN SET @Mes = 'JUNIO';
         WHEN 7
-             CONCAT('ENERO, ', num);
+            THEN SET @Mes = 'JULIO';
         WHEN 8
-             CONCAT('FEBRERO, ', num);
+            THEN SET @Mes = 'AGOSTO';
         WHEN 9
-             CONCAT('MARZO, ', num);
+            THEN SET @Mes = 'SEPTIEMBRE';
         WHEN 10                       
-             CONCAT('ENERO, ', num);
+            THEN SET @Mes = 'OCTUBRE';
         WHEN 11
-             CONCAT('FEBRERO, ', num);
+            THEN SET @Mes = 'NOVIEMBRE';
         WHEN 12
-             CONCAT('MARZO, ', num);
+            THEN SET @Mes = 'DICIEMBRE';
+   END CASE;
+ END;
+//
+delimiter ;
 
+CALL Meses (10);
+
+SELECT @Mes;
