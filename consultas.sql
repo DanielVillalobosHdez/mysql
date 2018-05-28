@@ -158,7 +158,7 @@ SELECT MAX(FechaPago), MIN(FechaPago), CodigoCliente FROM Pagos GROUP BY CodigoC
 SELECT * FROM Pagos WHERE FechaPago = (SELECT MAX(FechaPago) FROM Pagos WHERE CodigoCliente = 1) OR (SELECT MIN(FechaPago) FROM Pagos WHERE CodigoCliente = 1) AND CodigoCliente = 1;
 
 /*42. Sacar el codigo de cliente de aquellos clientes que realizaron pagos en 2008*/
-SELECT CodigoCliente FROM Pagos WHERE YEAR(FechaPago) = "2008";
+SELECT DISTINCT CodigoCliente FROM Pagos WHERE YEAR(FechaPago) = "2008";
 
 /*43. Sacar el numero de pedidos, codigo cliente, fecha requerida, fecha de entrega de los pedidos que no han sido entregados a tiempo*/
 SELECT CodigoPedido, CodigoCliente, FechaEsperada, FechaEntrega FROM Pedidos WHERE FechaEsperada>FechaEntrega;
