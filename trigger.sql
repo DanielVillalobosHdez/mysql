@@ -99,7 +99,9 @@ SELECT @Bote;
 
 /**************************************PROCEDURE***************************************/
 
-
+CREATE TABLE tuputamadre (
+	Gilipollas INT
+);
 
 delimiter //
 
@@ -107,6 +109,7 @@ CREATE PROCEDURE dorepeat(p1 INT)
 BEGIN
     SET @x = 0;
     REPEAT SET @x = @x + 1; UNTIL @x > p1 END REPEAT;
+	INSERT INTO tuputamadre VALUES (@x);
 END
 //
 
@@ -234,3 +237,12 @@ delimiter ;
 
 
 /*Crear Procedimiento llamado facturacion y tabla factura (CodigoFactura, CodigoCliente, CodigoPedido, PrecioTotal) crear factura */
+
+
+
+
+CREATE FUNCTION david (cristian INT(2))
+	RETURNS CHAR(50)
+	return CONCAT ('Dani es un ', cristian);
+
+SELECT david (10);
