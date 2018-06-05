@@ -192,4 +192,4 @@ SELECT CodigoPedido, AVG(PrecioUnidad*Cantidad) FROM DetallePedidos GROUP BY Cod
 
 /*53. Cual es el pedido más caro del empleado que más clientes tiene*/
 
-
+SELECT Clientes.NombreCliente, Pedidos.CodigoPedido, SUM(Detalle.PrecioUnidad*Detalle.Cantidad) as Precio FROM DetallePedidos as Detalle JOIN Pedidos as Pedidos JOIN Clientes as Clientes ON Detalle.CodigoPedido = Pedidos.CodigoPedido AND Pedidos.CodigoCliente = Clientes.CodigoCliente GROUP BY Detalle.CodigoPedido HAVING Precio = (SELECT MAX(SUM(PrecioUnidad*Cantidad)) as Precio FROM DetallePedidos GROUP BY CodigoPedido);

@@ -99,7 +99,9 @@ SELECT @Bote;
 
 /**************************************PROCEDURE***************************************/
 
-
+CREATE TABLE tuputamadre (
+	Gilipollas INT
+);
 
 delimiter //
 
@@ -107,6 +109,7 @@ CREATE PROCEDURE dorepeat(p1 INT)
 BEGIN
     SET @x = 0;
     REPEAT SET @x = @x + 1; UNTIL @x > p1 END REPEAT;
+	INSERT INTO tuputamadre VALUES (@x);
 END
 //
 
@@ -203,6 +206,43 @@ BEGIN
 END //
 delimiter ;
 
- /* En jardineria procedimeinto llamado ActualizacionLimiteCredito, TABLA LimiteCredito (Fecha, CodigoCliente, Incremento y IncrementoTotal(15% Aplicado ), Actualiza (Incremente) los limites de credito de los clientes en un 15%, solo a los clientes de antes del 2010 */
+/* En jardineria procedimeinto llamado ActualizacionLimiteCredito, TABLA LimiteCredito (Fecha, CodigoCliente, Incremento y IncrementoTotal(15% Aplicado ), Actualiza (Incremente) los limites de credito de los clientes en un 15%, solo a los clientes de antes del 2010 */
+
+CREATE TABLE LimitesCreditos (
+	Fecha DATE,
+	CodigoCliente INT,
+	LimiteCredito DECIMAL(10,2),
+	Incremento DECIMAL(10,2),
+	IncrementoTotal DECIMAL(10,2)
+);
+
+INSERT INTO LimitesCreditos (Fecha, CodigoCliente, LimiteCredito) VALUE
+	('2018/09/04',1,500),
+	('2001/11/09',2,300),
+	('2004/03/11',3,5000),
+	('2004/03/11',4,1500),
+	('2004/03/11',5,7000);
+
+delimiter //
+CREATE PROCEDURE ActualicionLimiteCredito ()
+BEGIN
+	INSERT INTO LimiteCredito (Incremento) ((SELECT GETDATE(LimiteCredito) FROM LimitesCreditos) / 15)*100) WHERE CodigoCliente = 1;
+END //
+delimiter ; 
+
+
+
+
+
+
 
 /*Crear Procedimiento llamado facturacion y tabla factura (CodigoFactura, CodigoCliente, CodigoPedido, PrecioTotal) crear factura */
+
+
+
+
+CREATE FUNCTION david (cristian INT(2))
+	RETURNS CHAR(50)
+	return CONCAT ('Dani es un ', cristian);
+
+SELECT david (10);
