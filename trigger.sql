@@ -99,8 +99,8 @@ SELECT @Bote;
 
 /**************************************PROCEDURE***************************************/
 
-CREATE TABLE tuputamadre (
-	Gilipollas INT
+CREATE TABLE prueba (
+	prueba INT
 );
 
 delimiter //
@@ -109,7 +109,7 @@ CREATE PROCEDURE dorepeat(p1 INT)
 BEGIN
     SET @x = 0;
     REPEAT SET @x = @x + 1; UNTIL @x > p1 END REPEAT;
-	INSERT INTO tuputamadre VALUES (@x);
+	INSERT INTO prueba VALUES (@x);
 END
 //
 
